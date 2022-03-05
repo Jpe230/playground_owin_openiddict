@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <NoWarn>$(NoWarn);CS1591;NU5128</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+</Project>
