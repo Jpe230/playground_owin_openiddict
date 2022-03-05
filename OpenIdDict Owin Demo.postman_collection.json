@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "3329293f-63fe-45a6-8377-647b9afa7687",
+		"name": "OpenIdDict Owin Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "postman-1",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "postman-secret",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid api1 api2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44336/auth/token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44336",
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZDQkMtSFM1MTIiLCJraWQiOiJBNjgxMzQ1NEQzMUU0OTI4N0VCNTIxMkM4MkFBNjM0NjU1MTgwN0NCIiwidHlwIjoiYXQrand0In0.JkV9qQUE7BNN2e_2dDU8aNhNsJ-ZEBMKb2IZ77JMGAuVVbHvr4K5m3eCYSPTVHumQDDf8C_9-4mB2lza6a-mPdy40wAUfpcrHjjKl9hCPeQ2YmJs9vYOFxlYA9uFfCV0ToZNK_3yykAg6EQOHkdCM-f92UKwdIGMuY3Moah7dbgarp9QnysTaYT3US8iJ3MLwP4FfPGc8tl6ZnLSdVmMO710yjNWv6rhUlj7BYdk6my5qNjYy5ZApd-70LMGAsBNurvtLnB--v4cgrhw5jLhshxw7r3R7nsdeZzLkaYbqocEBtWMHqXU2fo5JrmgyfppJFgJKHOxEEa8-LyyUUaHrw.p6NkuzHXhoRjxydg6bQsRw.UZX8WRpGwmdAi4emljDfZT8XZAwRbp71kf-c-hSGgnAyODgB_R0Fw8kSp0KdL6b55E6dz6gkjAqqQN68QMzwBItHafo7AvUpURnePih3tt4urgNKnO8RN8C_FV5wCBLE-Uqa8gnjHHZDSzYhX8IxYUK4dy9yImwQdo2XdDDgTlTcxHu5SGUhL73bFiyCAdQy8c7PYoyETveCS07NThvYlpXYx0ZZGD76opOkgkCORZ6TbrQUiEtwA1FRjGpPi9lZm0NbmhAOi_ZOxjdoDR-bmQwISnKM7uDQXefg1fi2iHlJ0D2w1L_OLz0GhPX2Z4MXIFq1iSnSzx4QS846uks_WyfUtwPyGbGxzvIYMF8pxGlZfE2GoAbcSdjKxnqAsvVCSmOkRJBcnedsjIiU-nr09wZRtw1tU3XhZ-5LIbcufP3vN59YoJspwfSu56Xlv0q0ALSWXFjC4Zq-hgkh-_hJkwskRlx_B2rVF3rDKXEXRlsfAghFM_E5EXjZ6HTP7zmHqD1Io21ZPemFC8siV2NchwHJEmDDhJbD-xjrEAR2qM4uKsMru4VS2TA3mDgoPAd3VOs1zIKAk3emVfLxmCyGW04cbuSUX-EPU2GQOIsu897IeRSN77aG6Kd4XQ_PAICD2b5zFMXAJpDrqbzaTLDYIHeo3NCDnMhpS9bKrIg4FXdUoXg4DJ8BY3ztYkOlQ2knA31jnS1V3dBTZmrLFfo1h3KU7NQ_TdxDtXPsKumKXOIZXNu6bCghv9t-Eq4TVB7wFToDlCVbTnbmw6Mno0Hb3-9uarejlryLKoDzzNqkavIah_FkVHXDzdB5AHzLzEbfN3zeMK6w0iYEaDhcIJeE74ws4afjoKAUB0yMleSbiZrPoSWJlLNZURCT1iGHR0Cer1A-1Vtag8u7ifZwond4-PEumb-Tf3KXT5YoWSUs5IS7jYtd0WyI2oGLzij1IIIwW93EULPElg7WkutRrBp4iLQd-CtstHKVFxPzy29nh1AVbQiVIoGGnlJdwsdJO1Cbj6wNgJMuNVRVNLHRIr6gRTf1SkFCwim__MYaXz5-OKF0hHc0oGaX03x4pOKUqobt1535407lBqMnXr1t1-ZytvtkAIgARhjN3BHWGTaIYeIJ_me5by_f6YKNewNtg3ybVW8QQJO1gWnDo7t84_pNWv6C0FXKwcK2FLCaDI0sStJhl7QVcisoIt9oMNloHjCL9cEuU2pgBn9ZIo6d_urqvX_uQrfkbHKNavdF_quuRaY.DVyrJgQpfDvXMzsqarJS6bvWpFB1SOQ4v2rLWyHitYs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44342/api",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44342",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44379/api",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44379",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
