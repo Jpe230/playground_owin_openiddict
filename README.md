@@ -1,2 +1,2 @@
-# playground_owin_openiddict
-Testing owin and openiddict
+# Playground for OWIN and OpenIddict
+Testing OWIN and OpenIddict
