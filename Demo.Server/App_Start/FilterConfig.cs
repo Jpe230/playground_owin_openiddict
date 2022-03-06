@@ -1,13 +1,12 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Demo.Server
+namespace Demo.Server;
+
+public class FilterConfig
 {
-    public class FilterConfig
+    public static void RegisterGlobalFilters(GlobalFilterCollection filters)
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-        {
-            filters.Add(new HandleErrorAttribute());
-        }
+        filters.Add(new HandleErrorAttribute());
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.ApiResource.Introspect
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.ApiResource.LocalValidation", "Demo.ApiResource.LocalValidation\Demo.ApiResource.LocalValidation.csproj", "{B1D53091-DEF0-4A70-84AA-7415046A5782}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Framework.ApiResource.Introspection", "Demo.Framework.ApiResouce.Introspection\Demo.Framework.ApiResource.Introspection.csproj", "{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{B1D53091-DEF0-4A70-84AA-7415046A5782}.Release|x64.Build.0 = Release|Any CPU
 		{B1D53091-DEF0-4A70-84AA-7415046A5782}.Release|x86.ActiveCfg = Release|Any CPU
 		{B1D53091-DEF0-4A70-84AA-7415046A5782}.Release|x86.Build.0 = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|x64.Build.0 = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|x64.ActiveCfg = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|x64.Build.0 = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA2240AE-4486-4AA9-A401-C9B3F32F0BCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

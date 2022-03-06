@@ -20,7 +20,7 @@
 						},
 						{
 							"key": "client_id",
-							"value": "postman-1",
+							"value": "postman-2",
 							"type": "text"
 						},
 						{
@@ -30,7 +30,7 @@
 						},
 						{
 							"key": "scope",
-							"value": "openid api1 api2",
+							"value": "openid api2",
 							"type": "text"
 						}
 					]
@@ -93,6 +93,36 @@
 					"port": "44379",
 					"path": [
 						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 1 Framework",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZDQkMtSFM1MTIiLCJraWQiOiJBNjgxMzQ1NEQzMUU0OTI4N0VCNTIxMkM4MkFBNjM0NjU1MTgwN0NCIiwidHlwIjoiYXQrand0In0.BH0aB0nJ5rvVzOfKyjZxHOJz3vTgsyFlQ20yFXOPQxSgeWXvo70SACPs19bFLE0-7uAILH0Fwzha8wjy5FG0if6uOp68WN7M_n7LCSD0XYAYK7hlB7o3QAK1S3eksFqBlRSuvh3QmRcRY-39W1CfTBXcuAhJ9qU4gsoWJlf4clfKOAj6VkOlvQ8i937LWFS4gzGs7FJtyUg95TQLYyzj32qWbtnz3KFt6c4NOGi9cOyPaESuCDCsWbLUZGr-eZ782goLO3RuXNg9E-C9lj-I1MSUq09RrvWas2HEd6GXhzXlt9w45rr-MF9GYR3cAK2NdtY-Ceeh_cuqNISWY1EUVg.hpbghL2OGMwvA0r0LcmdaQ.ynDXUSq4q-v7hk-tPZusSjbopmJhgGTyC6P3IkXBlyL4Mpb5h8Cyv3v8uiPTJpHYapfeO0GKJuc9MkNTTfO-CoKGDiROuOfI7mada-HwmRxgWqoH8jv4MR3V_JU9UXQJTBcvky5QjKlKw-DJ8Mpm6G1kY-RhJ6kbBdWdaA_Vh_GgskPYEFMRIInekO8LMW9wpvu45mDRq4EUaGnI8JXnhxVrwX6eRc_Y18RJstxeWgezbUouZN2_DpRFQro-XB9BjXovXF4T85Dmpc_dsV9HQPzVElC279SvVZsQlJyDIgeBmxh099O6SJxfYwLX5Op5JRhD8F9BTHIb7laHD6uQ7wMA2tTboi729O1CyLhx_WRiDF6ZQETrsFQKGyUGRI_FWMFcPZduNxVtRtLItZN75UAhFjO_XYkDoYQ9koflX87ZmliQr47fGsW4lU_TMM9xnKQtsNnXd0vElQugY5IeHZB0lrKtmnl7_nMweNhFxbMf_oPsLDYRf3j1yy4RGPmOO6O3RqN5SWKxxC3aUyQGiz-cdUvON8ucW0taO_mRyXXg7pADiD2cCb_qCATT_rNJisG9bK6qOdZ8PeS6b00fPT6A3soB_8e4aR3w4ZRLa0zlX5cNDESH2TjaO_f6uSHMyw60D9in0Jb1RvZHqkiC18mjlucr8FyVE11Rg_JtgM04ngmcSuWXwW4RCQzSYHzyZQzceNMH30q-mtIaqExaQu4ccuPdfY69uAILqB3xaePdV8ke-nVl-FwbRNXlUIiEwHvINAO9RGPD_m0wJgYeNLXA26JGxEY4JTf-yBdme5jhvbTizD0GbOTuqFXCPa7zv0tb2XkS3zy_c136q-PK2ianMq_Euj8-dix4Vqewboc-HREI5mLipk_cWIMheEV639Aq4FKlXzf7ZaonMH1hOx0mJgB3ooUAszqDLeAbuY6iTOjAWGsMAtWf1dHkE93CeJpRGTi_FHfVqQkM4Ezugzhke5cZTf5AzApmX2qOO0w1eCzMEJEN93m3aNcdb65VYzYlrH0qRqKk8VQL_Vh4qiRF0pmUglIJLnrF5P7Ul-DiH8mParoFNQ0_SRmSHTxPf1qV1rMl5PFVaqKwGh2XSnXXE94t_bsELTE6Gy7BsXue8RVNYAuVkRP3k_E0YUzeSd1LU_AemPd0fUAwxUiHfXwjjF0nbhPdt69Rh9kXpLI_Qk1G-RvbcvKyCzQeC87R9SbXdHlVj8e0b-MVL9XthbxBmWuJNcTdQdfnnhZICHQ.gEZbvN4TQh3EtAw652le4tJVKtTb6WhJIkTSNsiDOsM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44385/api/message",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44385",
+					"path": [
+						"api",
+						"message"
 					]
 				}
 			},

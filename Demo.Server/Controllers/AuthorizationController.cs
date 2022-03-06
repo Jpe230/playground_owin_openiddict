@@ -12,103 +12,110 @@ using OpenIddict.Server.Owin;
 using Owin;
 
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using Microsoft.Owin;
 
-namespace Demo.Server.Controllers
+namespace Demo.Server.Controllers;
+
+public class AuthorizationController : Controller
 {
-    public class AuthorizationController : Controller
+    private readonly IOpenIddictApplicationManager _applicationManager;
+    private readonly IOpenIddictAuthorizationManager _authorizationManager;
+    private readonly IOpenIddictScopeManager _scopeManager;
+
+    public AuthorizationController(
+        IOpenIddictApplicationManager applicationManager,
+        IOpenIddictAuthorizationManager authorizationManager,
+        IOpenIddictScopeManager scopeManager)
     {
-        private readonly IOpenIddictApplicationManager _applicationManager;
-        private readonly IOpenIddictAuthorizationManager _authorizationManager;
-        private readonly IOpenIddictScopeManager _scopeManager;
+        _applicationManager = applicationManager;
+        _authorizationManager = authorizationManager;
+        _scopeManager = scopeManager;
+    }
 
-        public AuthorizationController(
-            IOpenIddictApplicationManager applicationManager,
-            IOpenIddictAuthorizationManager authorizationManager,
-            IOpenIddictScopeManager scopeManager)
+    [HttpPost, Route("~/auth/token")]
+    public async Task<ActionResult> Exchange()
+    {
+        // Retrieve OpenIdDict Request
+        IOwinContext      context = HttpContext.GetOwinContext();
+        OpenIddictRequest request = context.GetOpenIddictServerRequest() ??
+            throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
+
+        if (request.IsClientCredentialsGrantType())
         {
-            _applicationManager = applicationManager;
-            _authorizationManager = authorizationManager;
-            _scopeManager = scopeManager;
-        }
+            // Retrieve the application details from the database.
+            object application = await _applicationManager.FindByClientIdAsync(request.ClientId) ??
+                throw new InvalidOperationException("Details concerning the calling client application cannot be found.");
 
-        [HttpPost, Route("~/auth/token")]
-        public async Task<ActionResult> Exchange()
-        {
-            var context = HttpContext.GetOwinContext();
-            var request = context.GetOpenIddictServerRequest() ??
-                throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
+            // Create a new Identity
+            ClaimsIdentity identity = new ClaimsIdentity(OpenIddictServerOwinDefaults.AuthenticationType);
+            identity.AddClaim(new Claim(Claims.Subject, "Test Subject"));
+            identity.AddClaim(new Claim(Claims.Name, "Test Name").SetDestinations(Destinations.AccessToken));
 
-            if (request.IsClientCredentialsGrantType())
+            ClaimsPrincipal principal = new(identity);
+
+            // Set Scopes based on requested scopes
+            // OpenIdDict already validates the credentials and valid scopes, no need to validate it here.
+            principal.SetScopes(request.GetScopes());
+            principal.SetResources(await _scopeManager.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+
+
+            // Create Authorization with requiered scopes and Types.
+            object authorization = await _authorizationManager.CreateAsync(
+                principal: principal,
+                subject: "1",
+                client: await _applicationManager.GetIdAsync(application),
+                type: AuthorizationTypes.Permanent,
+                scopes: principal.GetScopes()
+            );
+
+            principal.SetAuthorizationId(await _authorizationManager.GetIdAsync(authorization));
+
+            // Set Destinations of claims (The claims should go Access Token or ID Token?)
+            foreach (Claim claim in principal.Claims)
             {
-
-                // Retrieve the application details from the database.
-                var application = await _applicationManager.FindByClientIdAsync(request.ClientId) ??
-                    throw new InvalidOperationException("Details concerning the calling client application cannot be found.");
-
-
-                var identity = new ClaimsIdentity(OpenIddictServerOwinDefaults.AuthenticationType);
-                identity.AddClaim(new Claim(Claims.Subject, "Test Subject"));
-                identity.AddClaim(new Claim(Claims.Name, "Test Name").SetDestinations(Destinations.AccessToken));
-
-                var principal = new ClaimsPrincipal(identity);
-
-                principal.SetScopes(request.GetScopes());
-                principal.SetResources(await _scopeManager.ListResourcesAsync(principal.GetScopes()).ToListAsync());
-
-                var authorization = await _authorizationManager.CreateAsync(
-                    principal: principal,
-                    subject: "1",
-                    client: await _applicationManager.GetIdAsync(application),
-                    type: AuthorizationTypes.Permanent,
-                    scopes: principal.GetScopes()
-                );
-
-                principal.SetAuthorizationId(await _authorizationManager.GetIdAsync(authorization));
-
-                foreach (var claim in principal.Claims)
-                {
-                    claim.SetDestinations(GetDestinations(claim, principal));
-                }
-
-                context.Authentication.SignIn(new AuthenticationProperties(), (ClaimsIdentity)principal.Identity);
-
-                return new EmptyResult();
+                claim.SetDestinations(GetDestinations(claim, principal));
             }
 
-            else
-            {
-                context.Authentication.Challenge(
-                        authenticationTypes: OpenIddictServerOwinDefaults.AuthenticationType,
-                        properties: new AuthenticationProperties(new Dictionary<string, string>
-                        {
-                            [OpenIddictServerOwinConstants.Properties.Error] = Errors.InvalidGrant,
-                            [OpenIddictServerOwinConstants.Properties.ErrorDescription] =
-                                "No :("
-                        }));
-            }
+            // Return the Access Token to the newly created Identity
+            context.Authentication.SignIn(new AuthenticationProperties(), (ClaimsIdentity)principal.Identity);
 
             return new EmptyResult();
         }
 
-        private IEnumerable<string> GetDestinations(Claim claim, ClaimsPrincipal principal)
+        else
         {
-            switch (claim.Type)
-            {
-                case Claims.Name:
-                    yield return Destinations.AccessToken;
+            // Other flows not enabled.
+            context.Authentication.Challenge(
+                    authenticationTypes: OpenIddictServerOwinDefaults.AuthenticationType,
+                    properties: new AuthenticationProperties(new Dictionary<string, string>
+                    {
+                        [OpenIddictServerOwinConstants.Properties.Error] = Errors.InvalidGrant,
+                        [OpenIddictServerOwinConstants.Properties.ErrorDescription] =
+                            "No :("
+                    }));
+        }
 
-                    if (principal.HasScope(Scopes.Profile))
-                        yield return Destinations.IdentityToken;
+        return new EmptyResult();
+    }
 
-                    yield break;
+    private IEnumerable<string> GetDestinations(Claim claim, ClaimsPrincipal principal)
+    {
+        switch (claim.Type)
+        {
+            case Claims.Name:
+                yield return Destinations.AccessToken;
 
-                // Never include the security stamp in the access and identity tokens, as it's a secret value.
-                case "AspNet.Identity.SecurityStamp": yield break;
+                if (principal.HasScope(Scopes.Profile))
+                    yield return Destinations.IdentityToken;
 
-                default:
-                    yield return Destinations.AccessToken;
-                    yield break;
-            }
+                yield break;
+
+            // Never include the security stamp in the access and identity tokens, as it's a secret value.
+            case "AspNet.Identity.SecurityStamp": yield break;
+
+            default:
+                yield return Destinations.AccessToken;
+                yield break;
         }
     }
 }
